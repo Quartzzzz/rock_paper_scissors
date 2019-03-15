@@ -2,28 +2,87 @@
 <html>
 <head>
 	<title>Rock Paper Scissors</title>
+	<meta charset="utf-8">
 </head>
 <body>
 
 <script type="text/javascript">
+	const playerSelection = "rock";
+	let winMessage;
+	let loseMessage;
+	let drawMessage;
 
-	function pickOutcome(num) {
+	function nameOutcome(num) {
 			switch (num) {
 			case 1:
-				return "Rock";
+				return "rock";
 				break;
 			case 2: 
-				return "Paper";
+				return "paper";
 				break;
 			case 3: 
-				return "Scissors"
+				return "scissors"
 				break;
 		}
 	}
+
 	function computerPlay() {
 		let randomNum = Math.floor((Math.random() * 3) + 1)
-		return pickOutcome(randomNum);
+		return nameOutcome(randomNum);
 	}
+
+	function playRound(playerSelection, computerSelection) {
+		let playerProcessed = playerSelection.toLowerCase();
+		winMessage = `You win ! ${playerSelection} beats ${computerSelection} !`;
+		loseMessage = `You lose... ${computerSelection} beats ${playerSelection}.`;
+		drawMessage = "It\'s a draw !";
+
+		if (playerProcessed === "rock" && computerSelection === "paper") {
+			return loseMessage;
+		}	else if (playerProcessed === "rock" && computerSelection === "scissors") {
+			return winMessage;
+		}	else if (playerProcessed === "rock" && computerSelection === "rock") {
+			return drawMessage;
+		} else if (playerProcessed === "paper" && computerSelection === "rock") {
+			return winMessage;
+		} else if (playerProcessed === "paper" && computerSelection === "scissors") {
+			return loseMessage;
+		} else if (playerProcessed === "paper" && computerSelection === "paper") {
+			return drawMessage;
+		} else if (playerProcessed === "scissors" && computerSelection === "paper") {
+			return winMessage;
+		} else if (playerProcessed === "scissors" && computerSelection === "rock") {
+			return loseMessage;
+		} else if (playerProcessed === "scissors" && computerSelection === "scissors") {
+			return drawMessage;
+		}
+	}
+
+	function game() {
+
+		let i = 1;
+		let playerScore = 0;
+		let computerScore = 0;
+		let drawCount = 0
+		
+		while (i < 6) {
+
+			let game = playRound(playerSelection, computerPlay())
+			console.log(game);
+			(game === winMessage) ? playerScore += 1 : (game === loseMessage) ? computerScore += 1 : drawCount += 1;
+
+			const scoreMessage = `You have ${playerScore} point(s). The computer has ${computerScore} point(s). There has been ${drawCount} draw(s)`;
+			console.log(scoreMessage);
+
+			console.log(`End of game ${i}.`);
+
+			i++
+		}
+
+	}
+
+	console.log(game());
+
 
 </script>
 </body>

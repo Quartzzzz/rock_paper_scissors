@@ -7,11 +7,12 @@
 <body>
 
 <script type="text/javascript">
-	const playerSelection = "rock";
-	let winMessage;
-	let loseMessage;
-	let drawMessage;
-
+	// Picks a random number between 1 and 3
+	function computerPlay() {
+		let randomNum = Math.floor((Math.random() * 3) + 1)
+		return nameOutcome(randomNum);
+	}
+	// Associates a name to the number
 	function nameOutcome(num) {
 			switch (num) {
 			case 1:
@@ -25,11 +26,10 @@
 				break;
 		}
 	}
-
-	function computerPlay() {
-		let randomNum = Math.floor((Math.random() * 3) + 1)
-		return nameOutcome(randomNum);
-	}
+	// Compares playerSelection and computerSelection to evaluate the winner. Returns a message based on who won.
+	let winMessage;
+	let loseMessage;
+	let drawMessage;
 
 	function playRound(playerSelection, computerSelection) {
 		let playerProcessed = playerSelection.toLowerCase();
@@ -58,27 +58,40 @@
 		}
 	}
 
+	// Repeat playRound() 5 times. Ask player to choose. Keep scores. Outputs the name of the winner if there is one.
 	function game() {
 
 		let i = 1;
 		let playerScore = 0;
 		let computerScore = 0;
 		let drawCount = 0
+		let scoreMessage;
 		
-		while (i < 6) {
+			while (i < 6) {
 
-			let game = playRound(playerSelection, computerPlay())
-			console.log(game);
-			(game === winMessage) ? playerScore += 1 : (game === loseMessage) ? computerScore += 1 : drawCount += 1;
+				const playerSelection = prompt('Rock, Paper or Scissors ? Enter your pick below.');
 
-			const scoreMessage = `You have ${playerScore} point(s). The computer has ${computerScore} point(s). There has been ${drawCount} draw(s)`;
-			console.log(scoreMessage);
+				let game = playRound(playerSelection, computerPlay())
+				console.log(game);
+				(game === winMessage) ? playerScore += 1 : (game === loseMessage) ? computerScore += 1 : drawCount += 1;
 
-			console.log(`End of game ${i}.`);
+				scoreMessage = `You have ${playerScore} point(s).The computer has ${computerScore} point(s).There has been ${drawCount} draw(s).`;
 
-			i++
+				console.log(scoreMessage);
+
+				console.log(`End of game ${i}.`);
+
+				i++
+			}
+		let winner;	
+		if (playerScore > computerScore) {
+			winner = "YOU WIN!";
+		} else if (computerScore > playerScore) {
+			winner = "The computer wins..."
+		} else if (computerScore === playerScore) {
+			winner = "No winner this time."
 		}
-
+		console.log(winner + ' ' + scoreMessage); 
 	}
 
 	console.log(game());
